@@ -35,4 +35,4 @@ jobs:
     - name: Run ansible playbook
       run: |
         cd ansible
-        ansible-playbook configure.yml -i inventory.txt --ask-vault-pass ${{ secrets.DB_PASSWORD }}
+        ansible-playbook configure.yml -i inventory.txt --ask-vault-password ${{ secrets.DB_PASSWORD }}

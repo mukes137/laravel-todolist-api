@@ -1,4 +1,4 @@
-name: PROD site deployment
+name: PROD SITE DEPLOYMENT
 on: workflow_dispatch
 
 jobs:

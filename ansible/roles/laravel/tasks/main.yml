@@ -32,10 +32,10 @@
   shell: |
     cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan key:generate
 
-- name: "DB seeding"
-  shell: |
-    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan db:seed
-  
 - name: "Run the migrations"
   shell: |
     cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan migrate --force
+
+- name: "DB seeding"
+  shell: |
+    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan db:seed

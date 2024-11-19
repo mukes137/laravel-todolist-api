@@ -19,7 +19,7 @@
   notify: Restart Nginx
 
 - name: "Install Composer dependencies"
-  script: composer install --no-scripts --no-dev
+  script: /usr/local/bin/composer install --no-scripts --no-dev
 
 - name: "Cache the configuration"
   script: "php artisan config:cache"

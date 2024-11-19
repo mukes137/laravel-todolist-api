@@ -1,0 +1,5 @@
+working_dir: /var/www/jobins
+mariadb_user_name: jobins
+mariadb_db_name: jobins-db
+collation: "utf8mb4_unicode_ci"
+encoding: "utf8mb4"

@@ -1,0 +1,39 @@
+- name: Installation install software-properties-common
+  apt: 
+    name: software-properties-common
+
+- name: "Repo PHP"
+  apt_repository:
+    repo="ppa:ondrej/php"
+
+- name: Install php
+  apt:
+    name: php{{ php_version }}-fpm
+    state: present
+
+- name: Install other packages
+  apt:
+    pkg:
+      - libapache2-mod-fcgid
+      - php8.1-fpm
+      - php8.1-mysql
+      - php8.1-bcmath
+      - php8.1-mbstring
+      - php8.1-xml
+      - php8.1-cli
+      - php8.1-curl
+      - php8.1-gd
+      - php8.1-zip
+      - unzip
+    state: present
+    update_cache: true
+
+- name: Altering the php.ini file for increasing file upload size
+  lineinfile:
+    path: /etc/php/8.1/cli/php.ini
+    regexp: 
+      - '^post_max_size= '
+      - '^upload_max_filesize= '
+    line:
+      - post_max_size= 200M
+      - upload_max_filesize= 200M

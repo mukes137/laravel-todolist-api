@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: true
+  roles:
+    - nginx
+    - php
+    - mysql
+    - laravel
+  vars:
+    ansible_shell_executable: /bin/bash

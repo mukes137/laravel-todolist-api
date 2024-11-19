@@ -21,6 +21,8 @@
 - name: "Install Composer dependencies"
   shell: |
     cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && /usr/local/bin/composer install --no-scripts --no-dev
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
 
 - name: "Cache the configuration"
   shell: |

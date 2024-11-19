@@ -1,0 +1,37 @@
+name: PROD site deployment
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+
+    - name: Create Environment
+      run: |
+        cat << EOF > .env
+        APP_URL="https://localhost"
+        APP_NAME=Laravel
+        APP_ENV=local
+        APP_KEY=ds23234
+        APP_DEBUG=false
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=${{ secrets.DB_NAME }}
+        DB_USERNAME=${{ secrets.DB_USER }}
+        DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+        BROADCAST_CONNECTION=log
+        FILESYSTEM_DISK=local
+        QUEUE_CONNECTION=database
+        REDIS_CLIENT=phpredis
+        REDIS_HOST=0.0.0.0
+        REDIS_PASSWORD=null
+        REDIS_PORT=6379
+        EOF
+
+    - name: Run ansible playbook
+      run: |
+        ansible-playbook configure.yml -i ansible/inventory.txt

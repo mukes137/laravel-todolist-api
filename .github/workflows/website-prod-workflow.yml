@@ -35,7 +35,7 @@ jobs:
     - name: Checkout the vault pass
       run: |
         cd ansible
-        echo ${{ secrets.VAULT_PASS }} > pass.yml
+        echo ${{ secrets.DB_PASSWORD }} > pass.yml
 
     - name: Run ansible playbook
       run: |

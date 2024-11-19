@@ -37,9 +37,9 @@
     name: PyMySQL
     state: present
 
-# - name: Include secrets
-#   include_vars:
-#     file: secrets.yml
+- name: Include secrets
+  include_vars:
+    file: secrets.yml
 
 - name: create user account for localhost
   community.mysql.mysql_user:

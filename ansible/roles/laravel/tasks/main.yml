@@ -17,3 +17,18 @@
     state: file
   become: true
   notify: Restart Nginx
+
+- name: "Install Composer dependencies"
+  script: composer install --no-scripts --no-dev
+
+- name: "Cache the configuration"
+  script: "php artisan config:cache"
+  
+- name: "Clear the view cache"
+  script: "php artisan key:generate"
+
+- name: "Clear the view cache"
+  script: "php artisan db:seed"
+  
+- name: "Run the migrations"
+  script: "php artisan migrate --force"

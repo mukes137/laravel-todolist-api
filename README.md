@@ -74,6 +74,8 @@ We are setting self hosted runner using multipass and we are deploying laravel a
 1. **Multipass server**:
    - Single server with 2vCPU and 4GB RAM
 
+      [MultiPass Server Setup](./multipass_server_setup.pdf)
+
 2. **GitHub Secrets**:
    ```
    DB_NAME

@@ -83,8 +83,7 @@ We are setting self hosted runner using multipass and we are deploying laravel a
 
 ## Architecture
 
-
-
+![Architecture for the application](./architecture.png)
 
 ### Workload deployment procedure
 ```mermaid

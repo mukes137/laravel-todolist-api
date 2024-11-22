@@ -1,163 +1,227 @@
-# Laravel To-Do List API
+# Laravel Local Deployment ( Docker )
 
-A simple To-Do list API built with Laravel.
+Production-Ready Docker Setup for Laravel Applications
 
-## Setup Instructions
+## Quick Setup
 
-Follow these steps to get the application up and running.
+```bash
+# Clone the repository
+git clone <your-repository-url>
+cd <repository-name>
 
-### Prerequisites
+# Start Docker environment
+docker compose up -d
 
-- MySQL Server
-- Redis Server
-- PHP 8.3
-- PHP Composer
+# Highlights
+1. PHP 8.2 with FPM for high-performance scripting.
+2. MySQL 8.0 for secure and robust database management.
+3. Redis with persistence for caching and session storage.
+4. Nginx Web Server for efficient request handling.
+5. Automated setup for easy initialization.
+6. Built-in health checks to monitor service stability.
+7. Volume support to maintain development continuity.
 
-### Installation Steps
 
-1. **Create MySQL and Redis servers**
+# Common Docker Commands
+```bash
+# Start containers
+docker compose up -d
 
-   Ensure that you have MySQL and Redis servers set up and running.
+# Stop containers
+docker compose down
 
-2. **Copy `.env` file**
+# Rebuild containers
+docker compose up -d --build
 
+ # View logs
+docker compose logs -f
+```
+
+## Troubleshooting
+
+### Container Issues
+```bash
+# Check status
+docker compose ps
+
+# View specific service logs
+docker compose logs -f [service_name]
+```
+
+### Database Connection Issues
+```bash
+# Check MySQL status
+docker compose ps mysql
+
+# View MySQL logs
+docker compose logs mysql
+```
+
+### Permission Issues
+```bash
+# Fix storage permissions
+docker compose exec <app> chmod -R 775 storage
+```
+
+
+# Laravel Application Remote Deployment
+
+This repository includes automated deployment pipeline using GitHub Actions, and Ansible for application deployment.
+We are setting self hosted runner using multipass and we are deploying laravel application on the same multipass server.
+
+## Prerequisites
+
+1. **Multipass server**:
+   - Single server with 2vCPU and 4GB RAM
+
+2. **GitHub Secrets**:
+   ```
+   DB_NAME
+   DB_USERNAME
+   DB_PASSWORD
+   ```
+
+## Architecture
+
+
+
+
+### Workload deployment procedure
+```mermaid
+graph LR
+    A[GitHub Push] --> B[GitHub Actions]
+    B --> C[env file creation]
+    C --> D[Ansible]
+```
+
+## Repository Structure
+
+```
+# GitHub Actions workflow
+
+├── .github/
+│   └── workflows/
+│       └── website-prod-workflow.yml
+
+# Ansible configuration with ansible-vault implemented
+├── ansible
+│   ├── configure.yml
+│   ├── inventory.txt
+│   ├── roles
+│   │   ├── laravel
+│   │   ├── mysql
+│   │   ├── nginx
+│   │   └── php
+│   └── secrets.yml
+```
+
+##  Manual Deployment for Ansible
+
+```bash
+cd ../ansible
+ansible-playbook configure.yml -i inventory.txt --ask-vault-pass <vault-password>
+```
+
+## Workflow Monitoring
+
+1. **GitHub Actions**:
+   - View workflow runs in GitHub repository Actions tab
+   - Check job logs for details
+
+2. **Application**:
+   - Check Ansible deployment logs
+
+## Runner Offline Issue
+
+1. **Runner**:
    ```bash
-   cp .env.example .env
-   ```
-
-3. **Update `.env` file**
-
-   Update the `.env` file with your environment-specific details, such as database credentials and Redis connection.
-
-4. **Install Dependencies**
-
-   ```bash
-   composer install
-   ```
-
-5. **Generate Application Key**
-
-   ```bash
-   php artisan key:generate
-   ```
-
-6. **Run Database Seeder**
-
-   ```bash
-   php artisan db:seed
-   ```
-
-7. **Serve site with herd or valet or nginx**
-
-    #### herd example
-    ```bash
-   herd domain test
-   herd link laravel-todolist-api
-   herd secure --site=laravel-todolist-api
-   ```
+   # Check runner status
+   GitHub-Repo > Settings > Actions > Runners > Select runner > Status
    
-Follow official documentation for nginx configuration and valet.
+   # Verify runner permissions
+   Start the multipass server
+   ```
 
-### Verify Application Functionality
 
-You can test the application using the following HTTP requests:
+## Support
 
-#### 1. Register
+1. **Deployment Issues**:
+   - Review Ansible verbose output
 
-**Request:**
+2. **Application Issues**:
+   - Verify Nginx configuration and logs
 
-```http
-POST https://laravel-todolist-api.test/api/register
-Content-Type: application/json
+# Ansible Deployment Configuration
 
-{
-  "name": "user",
-  "email": "user@user.com",
-  "password": "password",
-  "password_confirmation": "password"
-}
+This directory contains Ansible playbooks and roles for deploying the Laravel application on multipass server.
+
+## Directory Structure
+
+```
+├── ansible
+│   ├── configure.yml
+│   ├── inventory.txt
+│   ├── README.md
+│   ├── roles
+│   │   ├── laravel
+│   │   │   └── tasks
+│   │   │       └── main.yml
+│   │   ├── mysql
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   └── vars
+│   │   │       └── main.yml
+│   │   ├── nginx
+│   │   │   ├── handlers
+│   │   │   │   └── main.yml
+│   │   │   ├── tasks
+│   │   │   │   └── main.yml
+│   │   │   ├── templates
+│   │   │   │   └── nginx.conf.j2
+│   │   │   └── vars
+│   │   │       └── main.yml
+│   │   └── php
+│   │       ├── tasks
+│   │       │   └── main.yml
+│   │       └── vars
+│   │           └── main.yml
+│   └── secrets.yml
+
+The major components of the directory structure are:
+
+1. secrets.yml: This file contains sensitive information like database credentials, which are encrypted using Ansible Vault.
+2. configure.yml: This is the main Ansible playbook that orchestrates the deployment process.
+3. roles/: This directory contains Ansible roles for different components of the application.
 ```
 
-#### 2. Login
+### Running Playbooks
 
-**Request:**
+1. **Full Installation**:
+   ```bash
+   ansible-playbook configure.yml -i inventory.txt --ask-vault-pass
+   ```
 
-```http
-POST https://laravel-todolist-api.test/api/login
-Content-Type: application/json
+## Debugging
 
-{
-  "email": "user@user.com",
-  "password": "password"
-}
-```
+1. **Verbose Output**:
+   ```bash
+   ansible-playbook configure.yml -vvv
+   ```
 
-#### 3. Create To-Do Item
+2. **Check Mode**:
+   ```bash
+   ansible-playbook configure.yml --check
+   ```
 
-**Request:**
+3. **List Tasks**:
+   ```bash
+   ansible-playbook configure.yml --list-tasks
+   ```
 
-```http
-POST https://laravel-todolist-api.test/api/todo
-Authorization: Bearer YOUR_ACCESS_TOKEN
-Content-Type: application/json
+## Best Practices
 
-{
-  "title": "todo title",
-  "description": "todo description",
-  "completed": "0"
-}
-```
+1. Use tags for selective execution
+2. Implement proper error handling
+3. Keep roles focused and modular
+4. Use handlers for service restarts
 
-#### 4. List To-Do Items
-
-**Request:**
-
-```http
-GET https://laravel-todolist-api.test/api/todo
-Authorization: Bearer YOUR_ACCESS_TOKEN
-Content-Type: application/json
-```
-
-#### 5. To-Do Item Detail
-
-**Request:**
-
-```http
-GET https://laravel-todolist-api.test/api/todo/1
-Authorization: Bearer YOUR_ACCESS_TOKEN
-Content-Type: application/json
-
-{
-  "completed": 1
-}
-```
-
-#### 6. Update To-Do Item
-
-**Request:**
-
-```http
-PATCH https://laravel-todolist-api.test/api/todo/1
-Authorization: Bearer YOUR_ACCESS_TOKEN
-Content-Type: application/json
-
-{
-  "title": "todo title",
-  "description": "todo description",
-  "completed": "1"
-}
-```
-
-#### 7. Delete To-Do Item
-
-**Request:**
-
-```http
-DELETE https://laravel-todolist-api.test/api/todo/1
-Authorization: Bearer YOUR_ACCESS_TOKEN
-Content-Type: application/json
-```
-
----
-
-Replace `YOUR_ACCESS_TOKEN` with the actual token obtained during login for authorization.

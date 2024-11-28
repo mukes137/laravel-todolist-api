@@ -67,14 +67,17 @@ docker compose exec <app> chmod -R 775 storage
 # Laravel Application Remote Deployment
 
 This repository includes automated deployment pipeline using GitHub Actions, and Ansible for application deployment.
-We are setting self hosted runner using multipass and we are deploying laravel application on the same multipass server.
+We are deploying two multipass servers:
+1. One for setting it as self hosted runner.
+2. Another for deploying laravel application.
 
 ## Prerequisites
 
 1. **Multipass server**:
-   - Single server with 2vCPU and 4GB RAM
+   - Self Hosted server with 2vCPU and 4GB RAM
 
       [MultiPass Server Setup](./multipass_server_setup.pdf)
+
 
 2. **GitHub Secrets**:
    ```

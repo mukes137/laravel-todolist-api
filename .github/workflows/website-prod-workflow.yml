@@ -43,8 +43,6 @@ jobs:
 
     - name: Transfer the code
       run: |
-        ssh ubuntu@10.147.201.148 "sudo rm -rf  /home/ubuntu/app"
-        ssh ubuntu@10.147.201.148 "mkdir -p  /home/ubuntu/app"
         scp code.zip ubuntu@10.147.201.148:/home/ubuntu/app
 
     - name: Checkout the vault pass

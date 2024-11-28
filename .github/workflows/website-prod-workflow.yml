@@ -32,6 +32,11 @@ jobs:
         REDIS_PORT=6379
         EOF
 
+    - name: Install dependencies
+      run: |
+        apt update
+        apt install zip -y
+
     - name: Zip the code
       run: |
         zip -r code.zip .

@@ -18,27 +18,28 @@
   become: true
   notify: Restart Nginx
 
+
 - name: unzip codebase
-  shell: unzip /home/ubuntu/code.zip
+  shell: unzip /home/ubuntu/app/code.zip
 
 - name: "Install Composer dependencies"
   shell: |
-    cd /home/ubuntu && /usr/local/bin/composer install --no-scripts --no-dev
+    cd /home/ubuntu/app && /usr/local/bin/composer install --no-scripts --no-dev
   environment:
     COMPOSER_ALLOW_SUPERUSER: "1"
 
 - name: "Cache the configuration"
   shell: |
-    cd /home/ubuntu && php artisan config:cache
+    cd /home/ubuntu/app && php artisan config:cache
 
 - name: "Key generate"
   shell: |
-    cd /home/ubuntu && php artisan key:generate
+    cd /home/ubuntu/app && php artisan key:generate
 
 - name: "Run the migrations"
   shell: |
-    cd /home/ubuntu && php artisan migrate --force
+    cd /home/ubuntu/app && php artisan migrate --force
 
 - name: "DB seeding"
   shell: |
-    cd /home/ubuntu && php artisan db:seed
+    cd /home/ubuntu/app && php artisan db:seed

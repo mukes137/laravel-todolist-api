@@ -27,13 +27,3 @@
       - unzip
     state: present
     update_cache: true
-
-- name: Altering the php.ini file for increasing file upload size
-  lineinfile:
-    path: /etc/php/8.1/cli/php.ini
-    regexp: 
-      - '^post_max_size= '
-      - '^upload_max_filesize= '
-    line:
-      - post_max_size= 200M
-      - upload_max_filesize= 200M

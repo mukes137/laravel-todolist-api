@@ -18,9 +18,13 @@
   become: true
   notify: Restart Nginx
 
-
-- name: unzip codebase
-  shell: unzip /home/ubuntu/app/code.zip
+# - name: unzip codebase
+#   shell: unzip /home/ubuntu/app/code.zip
+- name: Unarchive a file that is already on the remote machine
+  ansible.builtin.unarchive:
+    src: /home/ubuntu/app/code.zip
+    dest: /home/ubuntu/app
+    remote_src: true
 
 - name: "Install Composer dependencies"
   shell: |

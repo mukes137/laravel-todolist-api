@@ -13,7 +13,7 @@ cd <repository-name>
 docker compose up -d
 
 # Highlights
-1. PHP 8.2 with FPM for high-performance scripting.
+1. PHP 8.3 with FPM for high-performance scripting.
 2. MySQL 8.0 for secure and robust database management.
 3. Redis with persistence for caching and session storage.
 4. Nginx Web Server for efficient request handling.

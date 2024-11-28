@@ -1,1 +1,2 @@
-[localhost]
+[multipass]
+10.147.201.148

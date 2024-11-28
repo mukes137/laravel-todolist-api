@@ -34,8 +34,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apt update
-        apt install zip -y
+        sudo apt-get update
+        sudo apt-get install zip -y
 
     - name: Zip the code
       run: |

@@ -18,24 +18,27 @@
   become: true
   notify: Restart Nginx
 
+- name: unzip codebase
+  shell: unzip /home/ubuntu/code.zip
+
 - name: "Install Composer dependencies"
   shell: |
-    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && /usr/local/bin/composer install --no-scripts --no-dev
+    cd /home/ubuntu/laravel-todolist-api/laravel-todolist-api && /usr/local/bin/composer install --no-scripts --no-dev
   environment:
     COMPOSER_ALLOW_SUPERUSER: "1"
 
 - name: "Cache the configuration"
   shell: |
-    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan config:cache
-  
+    cd /home/ubuntu/laravel-todolist-api/laravel-todolist-api && php artisan config:cache
+
 - name: "Key generate"
   shell: |
-    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan key:generate
+    cd /home/ubuntu/laravel-todolist-api/laravel-todolist-api && php artisan key:generate
 
 - name: "Run the migrations"
   shell: |
-    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan migrate --force
+    cd /home/ubuntu/laravel-todolist-api/laravel-todolist-api && php artisan migrate --force
 
 - name: "DB seeding"
   shell: |
-    cd /home/ubuntu/actions-runner/_work/laravel-todolist-api/laravel-todolist-api && php artisan db:seed
+    cd /home/ubuntu/laravel-todolist-api/laravel-todolist-api && php artisan db:seed

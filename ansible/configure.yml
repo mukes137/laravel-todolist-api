@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: multipass
   become: true
   roles:
     - nginx

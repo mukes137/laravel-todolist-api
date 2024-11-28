@@ -32,6 +32,14 @@ jobs:
         REDIS_PORT=6379
         EOF
 
+    - name: Zip the code
+      run: |
+        zip -r code.zip .
+
+    - name: Transfer the code
+      run: |
+        scp code.zip ubuntu@10.147.201.148:/home/ubuntu/
+
     - name: Checkout the vault pass
       run: |
         cd ansible

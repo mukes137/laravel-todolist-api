@@ -46,7 +46,7 @@ jobs:
 
     - name: Transfer the code
       run: |
-        scp code.zip ubuntu@10.147.201.148:/home/ubuntu/app
+        scp code.zip ubuntu@${{ secrets.SERVER_IP }}:/home/ubuntu/app
 
     - name: Checkout the vault pass
       run: |

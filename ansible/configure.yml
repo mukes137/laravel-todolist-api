@@ -6,6 +6,5 @@
     - php
     - mysql
     - laravel
-    - redis
   vars:
     ansible_shell_executable: /bin/bash

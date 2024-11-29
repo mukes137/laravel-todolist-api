@@ -9,6 +9,9 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v4
 
+    - name: Running PHP linter
+      uses: michaelw90/PHP-Lint@master
+
     - name: Create Environment
       run: |
         cat << EOF > .env

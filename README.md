@@ -130,6 +130,7 @@ ansible-playbook configure.yml -i inventory.txt --ask-vault-pass <vault-password
 
 1. **GitHub Actions**:
    - View workflow runs in GitHub repository Actions tab
+   - Check linter logs for code quality details
    - Check job logs for details
 
 2. **Application**:

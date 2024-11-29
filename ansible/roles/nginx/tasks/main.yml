@@ -27,6 +27,11 @@
     state: link
   notify: Restart Nginx
 
+- name: Create directory app
+  ansible.builtin.file:
+    path: /home/ubuntu/app
+    state: directory
+
 - name: Restart Nginx
   systemd:
     name: nginx

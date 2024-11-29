@@ -90,6 +90,9 @@ We are deploying two multipass servers:
 
 ![Architecture for the application](./architecture.png)
 
+## Downtime Scenario
+ The application will not face downtime unless and  until the server is down due to hardware failures.
+
 ### Workload deployment procedure
 ```mermaid
 graph LR

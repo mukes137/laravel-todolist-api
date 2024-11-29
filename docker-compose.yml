@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel_app
+    container_name: application
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
@@ -30,7 +30,7 @@ services:
       redis:
         condition: service_started
     networks:
-      - laravel-net
+      - app-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s
@@ -52,7 +52,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - laravel-net
+      - app-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
@@ -69,7 +69,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - laravel-net
+      - app-network
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -78,7 +78,7 @@ services:
     restart: unless-stopped
 
 networks:
-  laravel-net:
+  app-network:
     driver: bridge
 
 volumes:

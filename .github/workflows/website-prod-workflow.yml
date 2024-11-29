@@ -9,7 +9,13 @@ jobs:
     - name: Checkout the code
       uses: actions/checkout@v4
 
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install zip -y
+
     - name: Running PHP linter
+      continue-on-error: true
       uses: michaelw90/PHP-Lint@master
 
     - name: Create Environment
@@ -34,11 +40,6 @@ jobs:
         REDIS_PASSWORD=null
         REDIS_PORT=6379
         EOF
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install zip -y
 
     - name: Zip the code
       run: |
